@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Inicial</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-image: url("cadastro2.png");
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            margin-top: 70px;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .content {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+        }
+
+        button {
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            border-radius: 15px;
+            font-size: 25px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #2e8b57;
+            cursor: pointer;
+        }
+
+        h1 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background-color: rgba(255, 255, 255, 0.0);
+            padding: 10px;
+            border-radius: 10px;
+            width: 100%;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+        }
+
+        /* Estilos para o cabeçalho */
+        header {
+            text-align: center;
+            margin-top: 5px; /* Reduzi a margem superior */
+        }
+
+        header img {
+            max-width: 70px;
+        }
+
+        header h2 {
+            font-size: 20px;
+            color: black;
+        }
+
+        /* Estilos para o carrossel */
+        .carousel {
+        
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .carousel-images {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel img {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: transparent;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 24px;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: transparent;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="img/logoprefeitura.png" alt="Logo">
+        <h2>CASI - Centro de Atendimento Sócio-Infantil</h2>
+    </header>
+
+    <div class="container">
+        <div class="content">
+            <div class="carousel">
+                <div class="carousel-images">
+                    <img src="img/img1.png" alt="Imagem 1">
+                    <img src="img/img2.png" alt="Imagem 2">
+                    <img src="img/img3.png" alt="Imagem 3">
+                </div>
+                <button class="prev" onclick="moveCarousel(-1)">&#10094;</button>
+                <button class="next" onclick="moveCarousel(1)">&#10095;</button>
+            </div>
+        </div>
+
+        <div class="content">
+            <h1>PLANNING BOOK</h1>
+            <button onclick="window.location.href='cadastro_criancas.html'">Crianças</button>
+            <button onclick="window.location.href='cronograma.html'">Cronograma</button>
+            <button onclick="window.location.href='mural.html'">Mural de Recados</button>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Telefone: (11) 1234-5678</p>
+        <p>Endereço: Rua Exemplo, 123 - Cidade, Estado</p>
+    </footer>
+
+    <script>
+        let currentIndex = 0;
+
+        function moveCarousel(direction) {
+            const images = document.querySelectorAll('.carousel-images img');
+            const totalImages = images.length;
+
+            // Atualiza o índice atual com a direção (-1 para esquerda, 1 para direita)
+            currentIndex += direction;
+
+            // Verifica os limites e faz o loop
+            if (currentIndex >= totalImages) {
+                currentIndex = 0;
+            } else if (currentIndex < 0) {
+                currentIndex = totalImages - 1;
+            }
+
+            // Move as imagens no carrossel
+            document.querySelector('.carousel-images').style.transform = `translateX(${-currentIndex * 100}%)`;
+        }
+    </script>
+
+</body>
+</html>
