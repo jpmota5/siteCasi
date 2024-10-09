@@ -1,11 +1,53 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "casi";
+
+// Cria a conexão
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Verifica a conexão
+if ($conn->connect_error) {
+    die("Conexão falhou: " . $conn->connect_error);
+}
+
+// Obtém o ID da criança a ser editada
+$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+$crianca = null; // Inicializa a variável
+
+if ($id > 0) {
+    // Consulta para obter os dados da criança
+    $sql = "SELECT * FROM criancas WHERE id = ?";
+    if ($stmt = $conn->prepare($sql)) {
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $crianca = $result->fetch_assoc();
+        $stmt->close();
+    } else {
+        die("Erro ao preparar a consulta: " . $conn->error);
+    }
+    
+    if (!$crianca) {
+        die("Criança não encontrada.");
+    }
+} else {
+    die("ID da criança não especificado ou inválido.");
+}
+
+$conn->close();
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro das Crianças</title>
+    <title>Editar Criança</title>
     <style>
-        *{
+       *{
             padding: 0%;
             margin: 0%;
         }
@@ -123,42 +165,43 @@
         #view_button:hover {
             background-color:#2e8b57;
         }
+
     </style>
 </head>
 <body>
-    <a href="visualizar_criancas.php" id="view_button">Visualizar Crianças</a>
+    <a href="visualizar_criancas.php" id="view_button">Voltar à Lista</a>
     <div class="box">
-        <form action="processa_cadastro.php" method="POST" class="form-container">
+        <form action="processa_edicao.php" method="POST" class="form-container">
             <fieldset>
-                <br>
-                <legend>Cadastro de Crianças/Adolescentes</legend>
-                <br> 
+                <legend>Editar Dados da Criança</legend>
                 <div class="inputBox">
-                    <input type="text" name="nome" id="nome" class="inputUser" required>
+                    <input type="hidden" name="id" value="<?php echo htmlspecialchars($crianca['id']); ?>">
+                    
+                    <input type="text" name="nome" id="nome" class="inputUser" value="<?php echo htmlspecialchars($crianca['nome']); ?>" required>
                     <label for="nome" class="labelInput">Nome Completo</label>
                 </div>
-                <br> <br>
+                <br><br>
 
                 <div class="inputBox">
-                    <input type="text" name="endereco" id="endereco" class="inputUser" required> 
-                    <label for="endereço" class="labelInput">Endereço</label>
+                    <input type="text" name="endereco" id="endereco" class="inputUser" value="<?php echo htmlspecialchars($crianca['endereco']); ?>" required>
+                    <label for="endereco" class="labelInput">Endereço</label>
                 </div>
-                <br> <br>
+                <br><br>
 
                 <div class="inputBox">
-                    <input type="text" name="responsavel" id="responsavel" class="inputUser" required>  
+                    <input type="text" name="responsavel" id="responsavel" class="inputUser" value="<?php echo htmlspecialchars($crianca['responsavel']); ?>" required>
                     <label for="responsavel" class="labelInput">Responsável</label>
                 </div>
-                <br> <br>
+                <br><br>
 
                 <div class="inputBox">
-                    <input type="tel" name="contato1" id="contato1" class="inputUser" required>
+                    <input type="tel" name="contato1" id="contato1" class="inputUser" value="<?php echo htmlspecialchars($crianca['contato1']); ?>" required>
                     <label for="contato1" class="labelInput">Contato 1</label>
                 </div>
-                <br> <br>
+                <br><br>
 
                 <div class="inputBox">
-                    <input type="tel" name="contato2" id="contato2" class="inputUser" required>
+                    <input type="tel" name="contato2" id="contato2" class="inputUser" value="<?php echo htmlspecialchars($crianca['contato2']); ?>" required>
                     <label for="contato2" class="labelInput">Contato 2</label>
                 </div>
                 <br>
@@ -166,29 +209,29 @@
                 <div class="flex-container">
                     <div class="flex-item">
                         <p><b>Turno:</b></p>
-                        <input type="radio" id="manhã" name="turno" value="manhã" required>
-                        <label for="manhã">Manhã</label>
-                        <input type="radio" id="tarde" name="turno" value="tarde" required>
+                        <input type="radio" id="manha" name="turno" value="manhã" <?php echo isset($crianca['turno']) && $crianca['turno'] == 'manhã' ? 'checked' : ''; ?> required>
+                        <label for="manha">Manhã</label>
+                        <input type="radio" id="tarde" name="turno" value="tarde" <?php echo isset($crianca['turno']) && $crianca['turno'] == 'tarde' ? 'checked' : ''; ?> required>
                         <label for="tarde">Tarde</label>
                     </div>
-                    
+
                     <div class="flex-item">
                         <p><b>Dia:</b></p>
                         <select name="dia" id="dia">
-                            <option value="Segunda-Feira">Segunda-Feira</option>
-                            <option value="Terça-Feira">Terça-Feira</option>
-                            <option value="Quarta-Feira">Quarta-Feira</option>
-                            <option value="Quinta-Feira">Quinta-Feira</option>
+                            <option value="Segunda-Feira" <?php echo isset($crianca['dia']) && $crianca['dia'] == 'Segunda-Feira' ? 'selected' : ''; ?>>Segunda-Feira</option>
+                            <option value="Terça-Feira" <?php echo isset($crianca['dia']) && $crianca['dia'] == 'Terça-Feira' ? 'selected' : ''; ?>>Terça-Feira</option>
+                            <option value="Quarta-Feira" <?php echo isset($crianca['dia']) && $crianca['dia'] == 'Quarta-Feira' ? 'selected' : ''; ?>>Quarta-Feira</option>
+                            <option value="Quinta-Feira" <?php echo isset($crianca['dia']) && $crianca['dia'] == 'Quinta-Feira' ? 'selected' : ''; ?>>Quinta-Feira</option>
                         </select>
                     </div>
 
                     <div class="flex-item">
                         <p><b>Data de Nascimento:</b></p>
-                        <input type="date" name="data_nascimento" id="data_nascimento" required>
+                        <input type="date" name="data_nascimento" id="data_nascimento" value="<?php echo isset($crianca['data_nascimento']) ? htmlspecialchars($crianca['data_nascimento']) : ''; ?>" required>
                     </div>
                 </div>
-                <br> <br>
-                <input type="submit" name="submit" id="submit">
+                <br><br>
+                <input type="submit" name="submit" id="submit" value="Atualizar">
             </fieldset>
         </form>
     </div>

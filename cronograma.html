@@ -3,24 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cronograma Semanal</title>
+    <title>Preencher Cronograma</title>
     <style>
-        * {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-        }
         body {
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: Arial, sans-serif;
             background-image: url("cadastro2.png");
             background-size: cover;
-            background-position: center center;
+            background-position: center;
             background-repeat: no-repeat; 
-            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             height: 100vh;
-            overflow: hidden; 
+            margin: 0;
         }
-        .box {
+        .form-container {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -28,79 +25,60 @@
             background-color: rgba(0, 128, 0, 0.7);
             padding: 20px;
             border-radius: 20px;
-            width: 50%;
+            width: 35%;
             color: white;
         }
         h1 {
             text-align: center;
-            color: white;
         }
-        table {
+        input, select {
             width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid white;
             padding: 10px;
-            text-align: center;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: calc(100% - 22px);
+        }
+        button {
+            background-color: #008000;
             color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
         }
-        th {
-            background-color: rgba(0, 128, 0, 0.7);
-        }
-        header {
-            text-align: center;
-            margin-top: 5px;
-        }
-        header img {
-            max-width: 70px;
-        }
-        header h2 {
-            font-size: 20px;
-            color: black;
+        button:hover {
+            background-color: #005700;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <img src="img/logoprefeitura.png" alt="Logo">
-        <h2>CASI - Centro de Atendimento Sócio-Infantil</h2>
-    </header>
+<div class="form-container">
+    <h1>Preencher Cronograma</h1>
+    <form action="inserir_atividade.php" method="post">
+        <label for="horario">Horário:</label>
+        <input type="text" id="horario" name="horario" placeholder="Ex: 08:00 - 09:00" required>
 
-    <div class="box">
-        <h1>Cronograma Semanal</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Horário</th>
-                    <th>Segunda-Feira</th>
-                    <th>Terça-Feira</th>
-                    <th>Quarta-Feira</th>
-                    <th>Quinta-Feira</th>
-                    <th>Sexta-Feira</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>08:00 - 09:00</td>
-                    <td>Atividade 1</td>
-                    <td>Atividade 2</td>
-                    <td>Atividade 3</td>
-                    <td>Atividade 4</td>
-                    <td>Atividade 5</td>
-                </tr>
-                <tr>
-                    <td>09:00 - 10:00</td>
-                    <td>Atividade 1</td>
-                    <td>Atividade 2</td>
-                    <td>Atividade 3</td>
-                    <td>Atividade 4</td>
-                    <td>Atividade 5</td>
-                </tr>
-                <!-- Continue preenchendo conforme necessário -->
-            </tbody>
-        </table>
-    </div>
+        <label for="segunda">Segunda-Feira:</label>
+        <input type="text" id="segunda" name="segunda">
+
+        <label for="terca">Terça-Feira:</label>
+        <input type="text" id="terca" name="terca">
+
+        <label for="quarta">Quarta-Feira:</label>
+        <input type="text" id="quarta" name="quarta">
+
+        <label for="quinta">Quinta-Feira:</label>
+        <input type="text" id="quinta" name="quinta">
+
+        <label for="sexta">Sexta-Feira:</label>
+        <input type="text" id="sexta" name="sexta">
+
+        <button type="submit">Salvar</button>
+    </form>
+</div>
+
 </body>
 </html>
