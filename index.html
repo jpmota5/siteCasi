@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Inicial</title>
+    <title>Página Inicial - Site CASI</title>
     <style>
         * {
             padding: 0;
@@ -74,9 +74,26 @@
         /* Estilos para o cabeçalho */
         header {
             text-align: center;
-            margin-top: 5px; /* Reduzi a margem superior */
+            margin-top: 5px;
         }
 
+               .home-button {
+            background-color: #008000;
+            border: none;
+            padding: 15px;
+            font-size: 15px;
+            cursor: pointer;
+            border-radius: 15px;
+            color: white;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            text-align: center;
+            text-decoration: none;
+        }
+        .home-button:hover {
+            background-color: #2e8b57;
+        }
         header img {
             max-width: 70px;
         }
@@ -88,7 +105,6 @@
 
         /* Estilos para o carrossel */
         .carousel {
-        
             position: relative;
             width: 100%;
             max-width: 500px;
@@ -136,7 +152,7 @@
 <body>
 
     <header>
-        <img src="img/logoprefeitura.png" alt="Logo">
+        <img src="/siteCasi/img/logoprefeitura.png" alt="Logo"> <!-- Caminho atualizado -->
         <h2>CASI - Centro de Atendimento Sócio-Infantil</h2>
     </header>
 
@@ -144,9 +160,9 @@
         <div class="content">
             <div class="carousel">
                 <div class="carousel-images">
-                    <img src="img/img1.png" alt="Imagem 1">
-                    <img src="img/img2.png" alt="Imagem 2">
-                    <img src="img/img3.png" alt="Imagem 3">
+                    <img src="/siteCasi/img/img1.png" alt="Imagem 1"> <!-- Caminhos atualizados -->
+                    <img src="/siteCasi/img/img2.png" alt="Imagem 2">
+                    <img src="/siteCasi/img/img3.png" alt="Imagem 3">
                 </div>
                 <button class="prev" onclick="moveCarousel(-1)">&#10094;</button>
                 <button class="next" onclick="moveCarousel(1)">&#10095;</button>
@@ -155,15 +171,14 @@
 
         <div class="content">
             <h1>PLANNING BOOK</h1>
-            <button onclick="window.location.href='criancas/visualizar_criancas.php'">Crianças</button>
-            <button onclick="window.location.href='cronograma/visualizar_cronograma.php'">Cronograma</button>
-            <button onclick="window.location.href='mural/mural.php'">Mural</button>
+            <button onclick="window.location.href='/siteCasi/criancas/visualizar_criancas.php'">Crianças</button>
+            <button onclick="window.location.href='/siteCasi/cronograma/visualizar_cronograma.php'">Cronograma</button>
+            <button onclick="window.location.href='/siteCasi/mural/mural.php'">Mural</button>    
         </div>
     </div>
     
     <footer>
-        <p>Telefone: (11) 1234-5678</p>
-        <p>Endereço: Rua Exemplo, 123 - Cidade, Estado</p>
+        <button onclick="window.location.href='/siteCasi/contato/contato.php'">Contato</button> <!-- Caminho atualizado -->
     </footer>
 
     <script>
