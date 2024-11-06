@@ -11,7 +11,7 @@
         }
         body{
             font-family: Arial, Helvetica, sans-serif;
-            background-image: url("cadastro2.png");
+            background-image: url("../cadastro2.png");
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat; 
@@ -99,17 +99,36 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 10px; /* Espaço entre os itens */
+            gap: 10px; 
         }
         .flex-item {
             flex: 1;
-            min-width: 0; /* Para prevenir que os itens sejam menores do que seu conteúdo */
+            min-width: 0; 
+        }
+
+        #view_button {
+            background-color: #008000;
+            border: none;
+            padding: 15px;
+            font-size: 15px;
+            cursor: pointer;
+            border-radius: 15px;
+            color: white;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            text-align: center;
+            text-decoration: none;
+        }
+        #view_button:hover {
+            background-color:#2e8b57;
         }
     </style>
 </head>
 <body>
+    <a href="visualizar_criancas.php" id="view_button">Visualizar Crianças</a>
     <div class="box">
-        <form action="" class="form-container">
+        <form action="processa_cadastro.php" method="POST" class="form-container">
             <fieldset>
                 <br>
                 <legend>Cadastro de Crianças/Adolescentes</legend>
@@ -121,7 +140,7 @@
                 <br> <br>
 
                 <div class="inputBox">
-                    <input type="text" name="endereço" id="endereço" class="inputUser" required> 
+                    <input type="text" name="endereco" id="endereco" class="inputUser" required> 
                     <label for="endereço" class="labelInput">Endereço</label>
                 </div>
                 <br> <br>
@@ -155,11 +174,11 @@
                     
                     <div class="flex-item">
                         <p><b>Dia:</b></p>
-                        <select name="Dia">
-                            <option value="seg">Segunda-Feira</option>
-                            <option value="ter">Terça-Feira</option>
-                            <option value="qua">Quarta-Feira</option>
-                            <option value="qui">Quinta-Feira</option>
+                        <select name="dia" id="dia">
+                            <option value="Segunda-Feira">Segunda-Feira</option>
+                            <option value="Terça-Feira">Terça-Feira</option>
+                            <option value="Quarta-Feira">Quarta-Feira</option>
+                            <option value="Quinta-Feira">Quinta-Feira</option>
                         </select>
                     </div>
 

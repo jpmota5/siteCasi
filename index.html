@@ -155,9 +155,9 @@
 
         <div class="content">
             <h1>PLANNING BOOK</h1>
-            <button onclick="window.location.href='cadastro_criancas.html'">Crianças</button>
-            <button onclick="window.location.href='cronograma.html'">Cronograma</button>
-            <button onclick="window.location.href='mural.html'">Mural de Recados</button>
+            <button onclick="window.location.href='criancas/visualizar_criancas.php'">Crianças</button>
+            <button onclick="window.location.href='cronograma/visualizar_cronograma.php'">Cronograma</button>
+            <button onclick="window.location.href='mural/mural.php'">Mural</button>
         </div>
     </div>
     
@@ -173,10 +173,8 @@
             const images = document.querySelectorAll('.carousel-images img');
             const totalImages = images.length;
 
-            // Atualiza o índice atual com a direção (-1 para esquerda, 1 para direita)
             currentIndex += direction;
 
-            // Verifica os limites e faz o loop
             if (currentIndex >= totalImages) {
                 currentIndex = 0;
             } else if (currentIndex < 0) {
