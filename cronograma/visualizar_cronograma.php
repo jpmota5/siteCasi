@@ -26,7 +26,7 @@ $result = $conn->query($sql);
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
-            background-image: url("cadastro2.png");
+            background-image: url("../cadastro2.png");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat; 
@@ -109,11 +109,11 @@ $result = $conn->query($sql);
 <body>
 
     <header>
-        <img src="img/logoprefeitura.png" alt="Logo">
+        <img src="../img/logoprefeitura.png" alt="Logo">
         <h2>CASI - Centro de Atendimento Sócio-Infantil</h2>
     </header>
 
-    <a href="index.html" class="top-right-button">Página inicial</a>
+    <a href="../index.html" class="top-right-button">Página inicial</a>
 
     <div class="box">
         <h1>Cronograma Semanal</h1>

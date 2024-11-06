@@ -64,7 +64,7 @@ $cronograma = $result->fetch_assoc();
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
-            background-image: url("cadastro2.png");
+            background-image: url("../cadastro2.png");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat; 
@@ -135,7 +135,7 @@ $cronograma = $result->fetch_assoc();
 </head>
 <body>
     
-    <a href="index.php" class="top-right-button">Página inicial</a>
+    <a href="../index.html" class="top-right-button">Página inicial</a>
 
     <div class="box">
         <h1>Alterar Cronograma</h1>

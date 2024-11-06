@@ -11,7 +11,7 @@ ini_set('display_errors', 1);
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-image: url("cadastro2.png");
+            background-image: url("../cadastro2.png");
             display: flex;
             background-size: cover;
             background-position: center;

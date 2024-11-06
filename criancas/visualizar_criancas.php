@@ -26,7 +26,7 @@ $result = $conn->query($sql);
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-image: url('cadastro2.png');
+            background-image: url('../cadastro2.png');
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
@@ -110,7 +110,7 @@ $result = $conn->query($sql);
     </style>
 </head>
 <body>
-    <a href="index.html" class="view-button">Página Inicial</a>
+    <a href="../index.html" class="view-button">Página Inicial</a>
     <div class="container">
         <h1>Lista de Crianças Cadastradas</h1>
         <ul class="child-list">

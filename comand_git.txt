@@ -1,0 +1,6 @@
+git checkout -b "feature/NovaBranch"
+git add *
+git commit -m "Mensagem de Mudanca"
+git checkout main
+git merge feature/NovaBranch
+git branch -D feature/NovaBranch

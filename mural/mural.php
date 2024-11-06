@@ -27,7 +27,7 @@ $result = $conn->query($sql);
         body {
             padding: 30px;
             font-family: Arial, sans-serif;
-            background-image: url("cadastro2.png");
+            background-image: url("../cadastro2.png");
             display: flex;
             background-size: cover;
             background-position: center;
@@ -118,11 +118,11 @@ $result = $conn->query($sql);
 </head>
 <body>
     <header>
-        <img src="img/logoprefeitura.png" alt="Logo">
+        <img src="../img/logoprefeitura.png" alt="Logo">
         <h2>CASI - Centro de Atendimento Sócio-Infantil</h2>
     </header>
     <!-- Botão de Página Inicial -->
-    <a href="index.html" class="home-button">Página Inicial</a>
+    <a href="../index.html" class="home-button">Página Inicial</a>
 <br> <br> 
 
     <div class="mural">
@@ -130,7 +130,7 @@ $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
                 echo "<div class='mural-item'>";
-                echo "<img src='uploads/" . htmlspecialchars($row['imagem']) . "' alt='Imagem do mural'>";
+                echo "<img src='../uploads/" . htmlspecialchars($row['imagem']) . "' alt='Imagem do mural'>";
                 echo "<p>" . htmlspecialchars($row['descricao']) . "</p>";
                 echo "<button onclick='confirmarExclusao(" . $row['id'] . ")'>Excluir</button>";
                 echo "</div>";
@@ -142,7 +142,7 @@ $result = $conn->query($sql);
     </div>
 
     <!-- Botão para adicionar uma nova imagem -->
-    <a href="upload_imagem.php" class="add-button">Adicionar Nova Imagem</a>
+    <a href="../mural/upload_imagem.php" class="add-button">Adicionar Nova Imagem</a>
 
 </body>
 </html>

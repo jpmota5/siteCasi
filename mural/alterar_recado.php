@@ -1,9 +1,45 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "casi";
+
+// Cria a conexão
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Verifica a conexão
+if ($conn->connect_error) {
+    die("Conexão falhou: " . $conn->connect_error);
+}
+
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+
+    // Consulta para obter o recado específico
+    $sql = "SELECT titulo, mensagem FROM recados WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $stmt->bind_result($titulo, $mensagem);
+    $stmt->fetch();
+    $stmt->close();
+} else {
+    echo "<script>
+        alert('ID do recado não especificado.');
+        window.location.href = 'mural.php';
+    </script>";
+    exit;
+}
+
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adicionar Recado</title>
+    <title>Alterar Recado</title>
     <style>
         * {
             padding: 0;
@@ -12,7 +48,7 @@
         }
         body {
             font-family: Arial, Helvetica, sans-serif;
-            background-image: url("cadastro2.png");
+            background-image: url("../cadastro2.png");
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat; 
@@ -84,15 +120,16 @@
     <a href="mural.php" class="home-button">Mural de Recados</a>
 
     <div class="form-container">
-        <h1>Adicionar Novo Recado</h1>
-        <form action="processar_recado.php" method="POST">
+        <h1>Alterar Recado</h1>
+        <form action="processar_alteracao.php" method="POST">
+            <input type="hidden" name="id" value="<?php echo htmlspecialchars($id); ?>">
             <label for="titulo">Título:</label>
-            <input type="text" id="titulo" name="titulo" required>
+            <input type="text" name="titulo" id="titulo" value="<?php echo htmlspecialchars($titulo); ?>" required>
             
-            <label for="conteudo">Mensagem:</label>
-            <textarea id="conteudo" name="conteudo" required></textarea>
+            <label for="mensagem">Conteúdo:</label>
+            <textarea name="mensagem" id="mensagem" required><?php echo htmlspecialchars($mensagem); ?></textarea>
             
-            <button type="submit">Adicionar Recado</button>
+            <button type="submit">Salvar Alterações</button>
         </form>
     </div>
 
