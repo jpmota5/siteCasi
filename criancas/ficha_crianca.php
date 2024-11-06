@@ -33,7 +33,7 @@ $child = $result->fetch_assoc();
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-image: url('cadastro2.png');
+            background-image: url('../cadastro2.png');
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;

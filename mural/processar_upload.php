@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $descricao = $conn->real_escape_string($_POST['descricao']);
     
     // Diretório de upload
-    $diretorio = 'uploads/';
+    $diretorio = '../uploads/';
     
     // Verifica se o diretório de upload existe, se não, cria
     if (!is_dir($diretorio)) {
