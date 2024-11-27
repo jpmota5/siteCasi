@@ -4,6 +4,7 @@ $username = "root";
 $password = "";
 $dbname = "casi";
 
+
 // Cria a conexão com o banco de dados
 $conn = new mysqli($servername, $username, $password, $dbname);
 
