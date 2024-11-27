@@ -1,21 +1,4 @@
-<?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "casi";
 
-// Cria a conexão com o banco de dados
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Verifica a conexão
-if ($conn->connect_error) {
-    die("Falha na conexão: " . $conn->connect_error);
-}
-
-// Consulta para pegar as imagens e descrições
-$sql = "SELECT id, imagem, descricao FROM mural";
-$result = $conn->query($sql);
-?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
