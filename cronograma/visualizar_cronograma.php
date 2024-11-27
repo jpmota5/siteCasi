@@ -153,7 +153,7 @@ $result = $conn->query($sql);
         </table>
 
         <div class="action-buttons">
-            <a href="cronograma.html">Cadastrar Atividade</a>
+            <a href="cronograma.php">Cadastrar Atividade</a>
         </div>
     </div>
 
