@@ -4,8 +4,27 @@ if ($conn->connect_error) {
     die("Erro ao conectar ao banco de dados: " . $conn->connect_error);
 }
 
-$sql = "SELECT * FROM cronograma";
+// Consulta principal para obter o cronograma
+$sql = "SELECT * FROM cronograma ORDER BY FIELD(horario, '08:00-09:00', '09:00-10:00', '10:00-11:00', '13:00-14:00', '14:00-15:00', '15:00-16:00', '16:00-17:00')";
 $result = $conn->query($sql);
+
+// Função para obter crianças vinculadas a uma atividade
+function getCriançasVinculadas($atividadeId, $conn) {
+    // Consulta para buscar os IDs das crianças vinculadas à atividade
+    $criancasSql = "SELECT c.nome
+                    FROM atividades_alunos aa
+                    JOIN criancas c ON aa.id_aluno = c.id
+                    WHERE aa.id_cronograma = ?";
+    $stmt = $conn->prepare($criancasSql);
+    $stmt->bind_param("i", $atividadeId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $criancas = [];
+    while ($row = $result->fetch_assoc()) {
+        $criancas[] = $row['nome'];
+    }
+    return $criancas;
+}
 ?>
 
 <!DOCTYPE html>
@@ -29,142 +48,93 @@ $result = $conn->query($sql);
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        table th, table td {
-            border: 1px solid #ddd;
-            padding: 10px;
+        th, td {
+            padding: 12px;
             text-align: center;
+            border: 1px solid #ddd;
         }
 
-        table th {
-            background-color: #f4f4f4;
-            color: #333;
+        th {
+            background-color: #f4f7fc;
         }
 
-        table tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        .toggle-btn {
-            color: blue;
+        td {
+            background-color: #fff;
             cursor: pointer;
-            text-decoration: underline;
         }
 
-        .details {
+        td:hover {
+            background-color: #f1f1f1;
+        }
+
+        .crianças-list {
             display: none;
-            text-align: left;
-            margin-top: 10px;
+            background-color: #f9f9f9;
             padding: 10px;
-            background: #f4f4f4;
-            border-radius: 5px;
-        }
-
-        .details strong {
-            color: #333;
+            border: 1px solid #ddd;
+            margin-top: 10px;
         }
     </style>
     <script>
         function toggleDetails(id) {
-            const details = document.getElementById(`details-${id}`);
-            if (details.style.display === "none" || details.style.display === "") {
-                details.style.display = "block";
+            const detailsElement = document.getElementById(id);
+            if (detailsElement.style.display === 'none' || detailsElement.style.display === '') {
+                detailsElement.style.display = 'block';
             } else {
-                details.style.display = "none";
+                detailsElement.style.display = 'none';
             }
         }
     </script>
 </head>
 <body>
-    <h1>Cronograma Semanal</h1>
+    <h1>Cronograma de Atividades</h1>
     <table>
         <thead>
             <tr>
                 <th>Horário</th>
-                <th>Segunda</th>
-                <th>Terça</th>
-                <th>Quarta</th>
-                <th>Quinta</th>
-                <th>Sexta</th>
+                <th>Segunda-feira</th>
+                <th>Terça-feira</th>
+                <th>Quarta-feira</th>
+                <th>Quinta-feira</th>
+                <th>Sexta-feira</th>
             </tr>
         </thead>
         <tbody>
-            <?php while ($row = $result->fetch_assoc()): ?>
-                <tr>
-                    <td><?php echo $row['horario']; ?></td>
-                    <td>
-                        <?php 
-                        if (!empty($row['segunda'])): 
-                            $id = $row['id']; // Aqui definimos o ID da linha
-                        ?>
-                            <span class="toggle-btn" onclick="toggleDetails('<?php echo $id; ?>')">
-                                <?php echo $row['segunda']; ?>
-                            </span>
-                            <div id="details-<?php echo $id; ?>" class="details">
-                                <strong>Crianças:</strong>
-                                <?php
-                                // Usando o ID para fazer a consulta corretamente
-                                $alunos = $conn->query("
-                                    SELECT nome 
-                                    FROM criancas a 
-                                    JOIN atividades_alunos aa ON a.id = aa.id_aluno 
-                                    WHERE aa.id_cronograma = '$id'
-                                ");
-                                
-                                if ($alunos->num_rows > 0) {
-                                    while ($aluno = $alunos->fetch_assoc()) {
-                                        echo "<br>- " . $aluno['nome'];
-                                    }
-                                } else {
-                                    echo "<br>Nenhuma criança cadastrada.";
-                                }
-                                ?>
-                            </div>
-                        <?php else: ?>
-                            -
-                        <?php endif; ?>
-                    </td>
-                    <td>
-                        <?php if (!empty($row['terca'])): ?>
-                            <?php $id = $row['id']; // Definindo o ID novamente ?>
-                            <span class="toggle-btn" onclick="toggleDetails('<?php echo $id; ?>')">
-                                <?php echo $row['terca']; ?>
-                            </span>
-                            <div id="details-<?php echo $id; ?>" class="details">
-                                <strong>Crianças:</strong>
-                                <?php
-                                // Usando o ID para fazer a consulta corretamente
-                                $alunos = $conn->query("
-                                    SELECT nome 
-                                    FROM criancas a 
-                                    JOIN atividades_alunos aa ON a.id = aa.id_aluno 
-                                    WHERE aa.id_cronograma = '$id'
-                                ");
-                                if ($alunos->num_rows > 0) {
-                                    while ($aluno = $alunos->fetch_assoc()) {
-                                        echo "<br>- " . $aluno['nome'];
-                                    }
-                                } else {
-                                    echo "<br>Nenhuma criança cadastrada.";
-                                }
-                                ?>
-                            </div>
-                        <?php else: ?>
-                            -
-                        <?php endif; ?>
-                    </td>
-                    <td><?php echo $row['quarta'] ?: '-'; ?></td>
-                    <td><?php echo $row['quinta'] ?: '-'; ?></td>
-                    <td><?php echo $row['sexta'] ?: '-'; ?></td>
-                </tr>
-            <?php endwhile; ?>
+        <?php
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $horario = $row['horario'];
+                echo "<tr>";
+                echo "<td>{$row['horario']}</td>";
+
+                // Exibindo atividades para cada dia da semana
+                $dias = ['segunda', 'terca', 'quarta', 'quinta', 'sexta'];
+                foreach ($dias as $i => $dia) {
+                    $atividade = htmlspecialchars($row[$dia] ?? '');  // Verifica se há atividade para o dia
+                    if ($atividade) {
+                        // Recuperando crianças vinculadas à atividade
+                        $criancas = getCriançasVinculadas($row['id'], $conn); // Certifique-se de que 'id' é o campo correto
+                        $criancasList = implode(", ", $criancas);  // Lista de crianças
+                        echo "<td>
+                                <a href=\"javascript:void(0);\" onclick=\"toggleDetails('details_{$row['id']}_$i')\">$atividade</a>
+                                <div id=\"details_{$row['id']}_$i\" class=\"crianças-list\">
+                                    <strong>Crianças vinculadas:</strong><br>
+                                    $criancasList
+                                </div>
+                              </td>";
+                    } else {
+                        echo "<td></td>";  // Caso não haja atividade, exibe célula vazia
+                    }
+                }
+                echo "</tr>";
+            }
+        } else {
+            echo "<tr><td colspan='6'>Nenhuma atividade cadastrada</td></tr>";
+        }
+        ?>
         </tbody>
     </table>
 </body>
 </html>
-
-<?php
-$conn->close();
-?>
