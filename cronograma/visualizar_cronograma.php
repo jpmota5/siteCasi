@@ -10,7 +10,6 @@ $result = $conn->query($sql);
 
 // Função para obter crianças vinculadas a uma atividade
 function getCriançasVinculadas($atividadeId, $conn) {
-    // Consulta para buscar os IDs das crianças vinculadas à atividade
     $criancasSql = "SELECT c.nome
                     FROM atividades_alunos aa
                     JOIN criancas c ON aa.id_aluno = c.id
@@ -36,10 +35,19 @@ function getCriançasVinculadas($atividadeId, $conn) {
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            background-size: cover;
+            background-image: url('../cadastro2.png');
+            background-position: center center;
+            background-repeat: no-repeat;
+            width: 100vw;
+            height: 100vh;
+            justify-content: center;
+            margin 20px;
         }
 
         h1 {
+            margin-top: 30px;
+            margin-bottom: 30px;
             text-align: center;
             color: #333;
         }
@@ -76,6 +84,61 @@ function getCriançasVinculadas($atividadeId, $conn) {
             border: 1px solid #ddd;
             margin-top: 10px;
         }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 0 auto; 
+        }
+
+
+        .button-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .button-container2 {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .home-button {
+            background-color: #008000;
+            border: none;
+            padding: 15px;
+            font-size: 15px;
+            cursor: pointer;
+            border-radius: 15px;
+            color: white;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            text-align: center;
+            text-decoration: none;
+        }
+        .home-button:hover {
+            background-color: #2e8b57;
+        }
+
+        .register-button {
+            background-color: #006400;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .register-button:hover {
+            background-color: #2e8b57;
+        }
     </style>
     <script>
         function toggleDetails(id) {
@@ -89,6 +152,11 @@ function getCriançasVinculadas($atividadeId, $conn) {
     </script>
 </head>
 <body>
+    <div class="button-container">
+        <a href="../index.html" class="home-button">Página Inicial</a>
+    </div>
+    
+    <div class="container">
     <h1>Cronograma de Atividades</h1>
     <table>
         <thead>
@@ -109,14 +177,12 @@ function getCriançasVinculadas($atividadeId, $conn) {
                 echo "<tr>";
                 echo "<td>{$row['horario']}</td>";
 
-                // Exibindo atividades para cada dia da semana
                 $dias = ['segunda', 'terca', 'quarta', 'quinta', 'sexta'];
                 foreach ($dias as $i => $dia) {
-                    $atividade = htmlspecialchars($row[$dia] ?? '');  // Verifica se há atividade para o dia
+                    $atividade = htmlspecialchars($row[$dia] ?? '');
                     if ($atividade) {
-                        // Recuperando crianças vinculadas à atividade
-                        $criancas = getCriançasVinculadas($row['id'], $conn); // Certifique-se de que 'id' é o campo correto
-                        $criancasList = implode(", ", $criancas);  // Lista de crianças
+                        $criancas = getCriançasVinculadas($row['id'], $conn);
+                        $criancasList = implode(", ", $criancas);
                         echo "<td>
                                 <a href=\"javascript:void(0);\" onclick=\"toggleDetails('details_{$row['id']}_$i')\">$atividade</a>
                                 <div id=\"details_{$row['id']}_$i\" class=\"crianças-list\">
@@ -125,7 +191,7 @@ function getCriançasVinculadas($atividadeId, $conn) {
                                 </div>
                               </td>";
                     } else {
-                        echo "<td></td>";  // Caso não haja atividade, exibe célula vazia
+                        echo "<td></td>";
                     }
                 }
                 echo "</tr>";
@@ -136,5 +202,16 @@ function getCriançasVinculadas($atividadeId, $conn) {
         ?>
         </tbody>
     </table>
+    </div>
+
+    <div class="button-container2">
+        <a href="cronograma.php" class="register-button">Cadastrar Atividade</a>
+
+    </div>
+
 </body>
 </html>
+
+<?php
+$conn->close();
+?>

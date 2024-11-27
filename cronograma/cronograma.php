@@ -51,14 +51,14 @@
         }
 
         button {
-            background-color: #5c6bc0;
+            background-color: #008000;
             color: white;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
 
         button:hover {
-            background-color: #3f51b5;
+            background-color: #2e8b57;
         }
 
         .form-group {
