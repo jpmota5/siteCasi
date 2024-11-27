@@ -7,9 +7,18 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f7fc;
-            margin: 0;
-            padding: 0;
+            background-size: cover;
+            background-image: url('../cadastro2.png');
+            background-position: center center;
+            background-repeat: no-repeat;
+            width: 100vw;
+            height: 100vh;
+            justify-content: center;
+            margin 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
         }
 
         .container {

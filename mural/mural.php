@@ -25,15 +25,19 @@ $result = $conn->query($sql);
     <title>Mural de Imagens</title>
     <style>
         body {
-            padding: 30px;
             font-family: Arial, sans-serif;
             background-image: url("../cadastro2.png");
             display: flex;
             background-size: cover;
-            background-position: center;
+            background-position: center center;
             align-items: center;
             flex-direction: column;
             background-repeat: no-repeat;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
         }
         .mural {
             display: grid;
