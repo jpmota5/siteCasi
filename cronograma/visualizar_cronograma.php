@@ -41,8 +41,10 @@ function getCriançasVinculadas($atividadeId, $conn) {
             background-repeat: no-repeat;
             width: 100vw;
             height: 100vh;
-            justify-content: center;
-            margin 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
         }
 
         h1 {
