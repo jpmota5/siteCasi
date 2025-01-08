@@ -3,31 +3,34 @@ require '1conexao.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_atividade = $_POST['id_atividade'];
-    $id_crianca = $_POST['id_crianca'];
+    $id_criancas = $_POST['id_crianca']; // Agora um array
 
-    // Verificar se a combinação já existe
-    $stmt_check = $conn->prepare("SELECT COUNT(*) FROM 1atividade_crianca WHERE id_atividade = ? AND id_crianca = ?");
-    $stmt_check->bind_param("ii", $id_atividade, $id_crianca);
-    $stmt_check->execute();
-    $stmt_check->bind_result($exists);
-    $stmt_check->fetch();
-    $stmt_check->close();
+    foreach ($id_criancas as $id_crianca) {
+        // Verificar se a combinação já existe
+        $stmt_check = $conn->prepare("SELECT COUNT(*) FROM 1atividade_crianca WHERE id_atividade = ? AND id_crianca = ?");
+        $stmt_check->bind_param("ii", $id_atividade, $id_crianca);
+        $stmt_check->execute();
+        $stmt_check->bind_result($exists);
+        $stmt_check->fetch();
+        $stmt_check->close();
 
-    if ($exists > 0) {
-        // Combinação já existe
-        echo "<script>alert('Esta criança já está vinculada a esta atividade.'); window.location.href='1visualizar_cronograma.php';</script>";
-    } else {
+        if ($exists > 0) {
+            // Pular se já existe
+            continue;
+        }
+
         // Inserir nova combinação
         $stmt = $conn->prepare("INSERT INTO 1atividade_crianca (id_atividade, id_crianca) VALUES (?, ?)");
         $stmt->bind_param("ii", $id_atividade, $id_crianca);
-        if ($stmt->execute()) {
-            header("Location: 1visualizar_cronograma.php");
-            exit;
-        } else {
+        if (!$stmt->execute()) {
             echo "Erro ao vincular criança: " . $conn->error;
         }
         $stmt->close();
     }
+
+    // Redirecionar após a conclusão
+    header("Location: 1visualizar_cronograma.php");
+    exit;
 }
 
 $atividades = $conn->query("SELECT id, nome FROM 1atividades");
@@ -35,7 +38,6 @@ $criancas = $conn->query("SELECT id, nome FROM criancas");
 
 $conn->close();
 ?>
-
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -84,7 +86,7 @@ $conn->close();
             color: #555;
         }
 
-        input, select, button {
+        select {
             padding: 10px;
             margin: 10px 0;
             border: 1px solid #ddd;
@@ -92,14 +94,17 @@ $conn->close();
             font-size: 16px;
         }
 
-        input:focus, select:focus, button:focus {
+        select:focus {
             border-color: #5c6bc0;
             outline: none;
         }
 
         button {
+            padding: 10px 20px;
             background-color: #008000;
             color: white;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
@@ -150,12 +155,13 @@ $conn->close();
             </div>
 
             <div class="form-group">
-                <label for="id_crianca">Criança:</label>
-                <select id="id_crianca" name="id_crianca" required>
+                <label for="id_crianca">Crianças:</label>
+                <select id="id_crianca" name="id_crianca[]" multiple required>
                     <?php while ($crianca = $criancas->fetch_assoc()): ?>
                         <option value="<?= $crianca['id'] ?>"><?= $crianca['nome'] ?></option>
                     <?php endwhile; ?>
                 </select>
+                <p>Pressione Ctrl (ou Cmd no Mac) para selecionar várias crianças.</p>
             </div>
 
             <button type="submit">Vincular</button>
