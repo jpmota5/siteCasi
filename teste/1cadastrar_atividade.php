@@ -153,8 +153,6 @@ $conn->close();
                     <option value="Quarta">Quarta</option>
                     <option value="Quinta">Quinta</option>
                     <option value="Sexta">Sexta</option>
-                    <option value="Sábado">Sábado</option>
-                    <option value="Domingo">Domingo</option>
                 </select>
             </div>
 

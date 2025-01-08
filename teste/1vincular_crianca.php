@@ -15,25 +15,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt_check->close();
 
         if ($exists > 0) {
-            // Pular se já existe
             continue;
         }
 
-        // Inserir nova combinação
         $stmt = $conn->prepare("INSERT INTO 1atividade_crianca (id_atividade, id_crianca) VALUES (?, ?)");
         $stmt->bind_param("ii", $id_atividade, $id_crianca);
-        if (!$stmt->execute()) {
-            echo "Erro ao vincular criança: " . $conn->error;
-        }
+        $stmt->execute();
         $stmt->close();
     }
 
-    // Redirecionar após a conclusão
     header("Location: 1visualizar_cronograma.php");
     exit;
 }
 
-$atividades = $conn->query("SELECT id, nome FROM 1atividades");
+$atividades = $conn->query("SELECT id, nome, descricao, dia_da_semana, horario FROM 1atividades");
 $criancas = $conn->query("SELECT id, nome FROM criancas");
 
 $conn->close();
@@ -135,23 +130,45 @@ $conn->close();
         .home-button:hover {
             background-color: #2e8b57;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </style>
 </head>
 <body>
-    <div class="button-container">
-        <a href="../index.html" class="home-button">Página Inicial</a>
-    </div>
-
     <div class="container">
         <h1>Vincular Criança a Atividade</h1>
         <form method="POST" action="">
             <div class="form-group">
                 <label for="id_atividade">Atividade:</label>
-                <select id="id_atividade" name="id_atividade" required>
+                <select id="id_atividade" name="id_atividade" onchange="mostrarDetalhesAtividade()" required>
+                    <option value="">Selecione uma atividade</option>
                     <?php while ($atividade = $atividades->fetch_assoc()): ?>
-                        <option value="<?= $atividade['id'] ?>"><?= $atividade['nome'] ?></option>
+                        <option value="<?= $atividade['id'] ?>" 
+                            data-descricao="<?= $atividade['descricao'] ?>" 
+                            data-dia="<?= $atividade['dia_da_semana'] ?>" 
+                            data-horario="<?= $atividade['horario'] ?>">
+                            <?= $atividade['nome'] ?>
+                        </option>
                     <?php endwhile; ?>
                 </select>
+            </div>
+
+            <div id="detalhes_atividade" style="margin-top: 20px;">
+                <p><strong>Descrição:</strong> <span id="descricao"></span></p>
+                <p><strong>Dia da Semana:</strong> <span id="dia_da_semana"></span></p>
+                <p><strong>Horário:</strong> <span id="horario"></span></p>
             </div>
 
             <div class="form-group">
@@ -161,11 +178,27 @@ $conn->close();
                         <option value="<?= $crianca['id'] ?>"><?= $crianca['nome'] ?></option>
                     <?php endwhile; ?>
                 </select>
-                <p>Pressione Ctrl (ou Cmd no Mac) para selecionar várias crianças.</p>
+                <p>Pressione Ctrl para selecionar várias crianças.</p>
             </div>
 
             <button type="submit">Vincular</button>
         </form>
     </div>
+
+    <script>
+        function mostrarDetalhesAtividade() {
+            const selectAtividade = document.getElementById('id_atividade');
+            const selectedOption = selectAtividade.options[selectAtividade.selectedIndex];
+
+            const descricao = selectedOption.getAttribute('data-descricao') || '';
+            const dia = selectedOption.getAttribute('data-dia') || '';
+            const horario = selectedOption.getAttribute('data-horario') || '';
+
+            document.getElementById('descricao').textContent = descricao;
+            document.getElementById('dia_da_semana').textContent = dia;
+            document.getElementById('horario').textContent = horario;
+        }
+    </script>
 </body>
 </html>
+
