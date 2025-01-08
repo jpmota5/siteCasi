@@ -1,0 +1,83 @@
+CREATE TABLE `atividades` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(100) NOT NULL,
+  `descricao` text DEFAULT NULL,
+  `data` date DEFAULT NULL,
+  `hora` time DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+
+CREATE TABLE `atividades_alunos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_cronograma` int(11) NOT NULL,
+  `id_aluno` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_cronograma` (`id_cronograma`),
+  KEY `id_aluno` (`id_aluno`),
+  CONSTRAINT `atividades_alunos_ibfk_1` FOREIGN KEY (`id_cronograma`) REFERENCES `cronograma` (`id`),
+  CONSTRAINT `atividades_alunos_ibfk_2` FOREIGN KEY (`id_aluno`) REFERENCES `criancas` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+
+CREATE TABLE `criancas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(100) NOT NULL,
+  `data_nascimento` date NOT NULL,
+  `responsavel` varchar(100) DEFAULT NULL,
+  `endereco` varchar(255) DEFAULT NULL,
+  `contato1` varchar(20) DEFAULT NULL,
+  `contato2` varchar(20) DEFAULT NULL,
+  `turno` varchar(10) DEFAULT NULL,
+  `dia` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+
+CREATE TABLE `cronograma` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `horario` varchar(20) NOT NULL,
+  `segunda` varchar(255) DEFAULT NULL,
+  `terca` varchar(255) DEFAULT NULL,
+  `quarta` varchar(255) DEFAULT NULL,
+  `quinta` varchar(255) DEFAULT NULL,
+  `sexta` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+
+CREATE TABLE `mural` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `imagem` varchar(255) NOT NULL,
+  `descricao` text NOT NULL,
+  `data_upload` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+
+CREATE TABLE `recados` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `titulo` varchar(255) NOT NULL,
+  `mensagem` text NOT NULL,
+  `data_criacao` timestamp NOT NULL DEFAULT current_timestamp(),
+  `data` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+
+CREATE TABLE `usuarios` (
+  `usuario` varchar(255) DEFAULT NULL,
+  `senha` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+
+
+
+CREATE TABLE 1atividades (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    descricao TEXT,
+    dia_da_semana ENUM('Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo') NOT NULL,
+    horario TIME NOT NULL
+);
+
+CREATE TABLE 1atividade_crianca (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_atividade INT NOT NULL,
+    id_crianca INT NOT NULL,
+    FOREIGN KEY (id_atividade) REFERENCES 1atividades(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_crianca) REFERENCES criancas(id) ON DELETE CASCADE
+);

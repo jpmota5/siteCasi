@@ -50,11 +50,4 @@ foreach ($criancas as $id_aluno) {
 
 // Fecha a conexão
 $conn->close();
-
-// Exibe a notificação de sucesso e redireciona para visualizar_cronograma.php
-echo "<script>
-        alert('Atividade cadastrada com sucesso!');
-        window.location.href = 'visualizar_cronograma.php';
-      </script>";
-exit;
 ?>
