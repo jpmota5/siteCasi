@@ -121,7 +121,7 @@ $child = $result->fetch_assoc();
                 <span><?php echo htmlspecialchars($child['turno']); ?></span>
             </div>
             <div class="detail">
-                <label>Dia:</label>
+                <label>Gênero:</label>
                 <span><?php echo htmlspecialchars($child['dia']); ?></span>
             </div>
             <div class="detail">

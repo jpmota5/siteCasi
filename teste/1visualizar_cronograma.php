@@ -194,7 +194,8 @@ $conn->close();
                         <td><?= $row['descricao'] ?></td>
                         <td><?= $row['criancas'] ?></td>
                         <td class="actions">
-                            <a href="1vincular_crianca.php?id_atividade=<?= $row['atividade_id'] ?>" class="btn">Adicionar Criança</a>
+                            <!-- <a href="1vincular_crianca.php?id_atividade=<?= $row['atividade_id'] ?>" class="btn">Adicionar Criança</a> -->
+                            <a href="1editar_atividade_criancas.php?id_atividade=<?= $row['atividade_id'] ?>" class="btn">Editar Crianças</a>
                             <a href="1excluir_atividade.php?id=<?= $row['atividade_id'] ?>" class="btn" onclick="return confirm('Tem certeza que deseja excluir esta atividade?');">Excluir</a>
                         </td>
 

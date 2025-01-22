@@ -1,4 +1,5 @@
 <?php
+session_start(); // Inicia a sessão
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -26,17 +27,25 @@ $result = $conn->query($sql);
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-image: url('../cadastro2.png');
             background-size: cover;
+            background-image: url('../cadastro2.png');
             background-position: center center;
             background-repeat: no-repeat;
             width: 100vw;
             height: 100vh;
-            margin: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            overflow: hidden;
         }
+
+        h1 {
+            margin-top: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #333;
+        }
+
         .container {
             width: 80%;
             max-width: 800px;
@@ -45,39 +54,62 @@ $result = $conn->query($sql);
             border-radius: 8px;
             text-align: center;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 0 auto; 
         }
-        .child-list {
+
+        ul.child-list {
             list-style-type: none;
             padding: 0;
-            text-align: justify;
-            text-justify: inter-word;
+            margin: 20px 0;
         }
-        .child-list li {
-            margin: 10px 0;
+
+        ul.child-list li {
+            padding: 12px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            margin-bottom: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-radius: 8px;
         }
-        .child-list a {
+
+        ul.child-list li:hover {
+            background-color: #f1f1f1;
+        }
+
+        ul.child-list a {
+            color: #333;
             text-decoration: none;
-            color: #0066cc;
+            font-weight: bold;
+            transition: color 0.3s;
         }
-        .child-list a:hover {
-            text-decoration: underline;
+
+        ul.child-list a:hover {
+            color: #006400;
         }
+
         .delete-button {
             background-color: #ff0000;
-            border: none;
-            padding: 5px 10px;
-            font-size: 14px;
-            cursor: pointer;
-            border-radius: 5px;
             color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: background-color 0.3s, transform 0.2s;
         }
+
         .delete-button:hover {
             background-color: #cc0000;
         }
-        .view-button {
+
+        .button-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .home-button {
             background-color: #008000;
             border: none;
             padding: 15px;
@@ -85,34 +117,47 @@ $result = $conn->query($sql);
             cursor: pointer;
             border-radius: 15px;
             color: white;
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            text-align: center;
             text-decoration: none;
         }
-        .view-button:hover {
-            background-color: #2e8b57;
-        }
-        .home-button {
-            background-color: #006400;
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 8px;
-            margin-top: 20px;
-            display: inline-block;
-            transition: background-color 0.3s;
-        }
+
         .home-button:hover {
             background-color: #2e8b57;
+        }
+
+        .mensagem {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .mensagem.erro {
+            background-color: #ffcccc;
+            color: #cc0000;
+        }
+
+        .mensagem.sucesso {
+            background-color: #ccffcc;
+            color: #006600;
         }
     </style>
 </head>
 <body>
-    <a href="../index.html" class="view-button">Página Inicial</a>
+    <div class="button-container">
+        <a href="../index.html" class="home-button">Página Inicial</a>
+    </div>
+
     <div class="container">
         <h1>Lista de Crianças Cadastradas</h1>
+
+        <!-- Exibe mensagens de sucesso ou erro -->
+        <?php
+        if (isset($_SESSION['mensagem'])) {
+            $tipo = $_SESSION['tipo_mensagem'] ?? 'sucesso';
+            echo "<div class='mensagem $tipo'>" . $_SESSION['mensagem'] . "</div>";
+            unset($_SESSION['mensagem'], $_SESSION['tipo_mensagem']); // Limpa a mensagem após exibir
+        }
+        ?>
+
         <ul class="child-list">
             <?php
             if ($result->num_rows > 0) {
@@ -132,7 +177,7 @@ $result = $conn->query($sql);
             ?>
         </ul>
         
-        <a href="cadastro_criancas.html" class="home-button">Cadastrar</a>
+        <a href="cadastro_criancas.html" class="home-button">Cadastrar Nova Criança</a>
     </div>
 </body>
 </html>

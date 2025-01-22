@@ -208,7 +208,7 @@ $conn->close();
 
                 <div class="flex-container">
                     <div class="flex-item">
-                        <p><b>Turno:</b></p>
+                        <p><b>Turno de preferência:</b></p>
                         <input type="radio" id="manha" name="turno" value="manhã" <?php echo isset($crianca['turno']) && $crianca['turno'] == 'manhã' ? 'checked' : ''; ?> required>
                         <label for="manha">Manhã</label>
                         <input type="radio" id="tarde" name="turno" value="tarde" <?php echo isset($crianca['turno']) && $crianca['turno'] == 'tarde' ? 'checked' : ''; ?> required>
@@ -216,12 +216,10 @@ $conn->close();
                     </div>
 
                     <div class="flex-item">
-                        <p><b>Dia:</b></p>
+                        <p><b>Gênero:</b></p>
                         <select name="dia" id="dia">
-                            <option value="Segunda-Feira" <?php echo isset($crianca['dia']) && $crianca['dia'] == 'Segunda-Feira' ? 'selected' : ''; ?>>Segunda-Feira</option>
-                            <option value="Terça-Feira" <?php echo isset($crianca['dia']) && $crianca['dia'] == 'Terça-Feira' ? 'selected' : ''; ?>>Terça-Feira</option>
-                            <option value="Quarta-Feira" <?php echo isset($crianca['dia']) && $crianca['dia'] == 'Quarta-Feira' ? 'selected' : ''; ?>>Quarta-Feira</option>
-                            <option value="Quinta-Feira" <?php echo isset($crianca['dia']) && $crianca['dia'] == 'Quinta-Feira' ? 'selected' : ''; ?>>Quinta-Feira</option>
+                            <option value="Feminino" <?php echo isset($crianca['dia']) && $crianca['dia'] == 'Feminino' ? 'selected' : ''; ?>>Feminino</option>
+                            <option value="Masculino" <?php echo isset($crianca['dia']) && $crianca['dia'] == 'Masculino' ? 'selected' : ''; ?>>Masculino</option>
                         </select>
                     </div>
 
